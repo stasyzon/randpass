@@ -4,11 +4,9 @@ import {useForm} from "react-hook-form"
 import {Card} from "@/components/ui/card"
 import {Label} from "@/components/ui/label"
 import {Slider} from "@/components/ui/slider"
-import { UpdateIcon } from "@radix-ui/react-icons"
 import * as z from "zod"
 import {generatePassword} from "@/lib/generate"
 
-import {Button} from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -16,9 +14,10 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form"
-import {Input} from "@/components/ui/input"
-import CardWithSlider from "@/components/cardWithSlider";
+import CardWithSlider from "@/components/cardWithSwitcher";
 import {zodResolver} from "@hookform/resolvers/zod";
+import PasswordInput from "@/components/passwordInput";
+import {useCopyToClipboard} from "usehooks-ts";
 
 const formSchema = z.object({
   generatedPassword: z.string().optional(),
@@ -64,26 +63,22 @@ function InputForm() {
   }
 
   function checkSubmitDisable() {
-    const { isIncludeNumbers, isIncludeLowercase, isIncludeUppercase, isIncludeSymbols } = form.watch();
+    const {isIncludeNumbers, isIncludeLowercase, isIncludeUppercase, isIncludeSymbols} = form.watch();
     return !(isIncludeNumbers || isIncludeLowercase || isIncludeUppercase || isIncludeSymbols);
   }
 
   return (
     <div className="container max-w-screen-sm mx-auto h-screen py-6">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <form className="space-y-4">
           <FormField
             control={form.control}
             name="generatedPassword"
             render={({field}) => (
               <FormItem>
                 <FormControl>
-                  <div className="flex flex-row space-x-4">
-                    <Input readOnly className="h-12" placeholder="Generated password" {...field} />
-                    <Button className="w-4/12 h-12" disabled={checkSubmitDisable()}><UpdateIcon className="mr-2 h-4 w-4" /> Generate</Button>
-                  </div>
+                  <PasswordInput generateDisabled={checkSubmitDisable()} value={field.value}/>
                 </FormControl>
-                <FormMessage/>
               </FormItem>
             )}
           />
@@ -101,10 +96,9 @@ function InputForm() {
                           {field.value}
                         </span>
                     </div>
-                    <Slider defaultValue={[field.value]} max={32} min={4} step={1} onValueChange={setPasswordLength}/>
+                    <Slider defaultValue={[field.value]} max={24} min={4} step={1} onValueChange={setPasswordLength}/>
                   </Card>
                 </FormControl>
-                <FormMessage/>
               </FormItem>
             )}
           />
@@ -121,7 +115,6 @@ function InputForm() {
                     description="e.g. !@#$%^&*()+_\-=}{[\]|:;/?.><,`~]"
                   />
                 </FormControl>
-                <FormMessage/>
               </FormItem>
             )}
           />
@@ -138,7 +131,6 @@ function InputForm() {
                     description="e.g. 123456"
                   />
                 </FormControl>
-                <FormMessage/>
               </FormItem>
             )}
           />
@@ -155,7 +147,6 @@ function InputForm() {
                     description="e.g. abcdefgh"
                   />
                 </FormControl>
-                <FormMessage/>
               </FormItem>
             )}
           />
@@ -172,7 +163,6 @@ function InputForm() {
                     description="e.g. ABCDEFGH"
                   />
                 </FormControl>
-                <FormMessage/>
               </FormItem>
             )}
           />
@@ -189,7 +179,6 @@ function InputForm() {
                     description="e.g. i, l, 1, L, o, 0, O"
                   />
                 </FormControl>
-                <FormMessage/>
               </FormItem>
             )}
           />

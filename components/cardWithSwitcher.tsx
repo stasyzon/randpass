@@ -9,7 +9,7 @@ interface Props {
   onCheckedChange: (checked: boolean) => void;
 }
 
-function cardWithSlider({label, checked, onCheckedChange, description}: Props) {
+function cardWithSwitcher({label, checked, onCheckedChange, description}: Props) {
   return (
     <Card className="flex flex-row items-center justify-between p-5">
       <div className="flex flex-col space-y-2">
@@ -24,4 +24,4 @@ function cardWithSlider({label, checked, onCheckedChange, description}: Props) {
   )
 }
 
-export default cardWithSlider;
+export default cardWithSwitcher;
