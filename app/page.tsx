@@ -6,6 +6,7 @@ import {Label} from "@/components/ui/label"
 import {Slider} from "@/components/ui/slider"
 import { UpdateIcon } from "@radix-ui/react-icons"
 import * as z from "zod"
+import {generatePassword} from "@/lib/generate"
 
 import {Button} from "@/components/ui/button"
 import {
@@ -22,30 +23,37 @@ import {zodResolver} from "@hookform/resolvers/zod";
 const formSchema = z.object({
   generatedPassword: z.string().optional(),
   passwordLength: z.number(),
-  isIncludeSpecialSymbols: z.boolean(),
-  isIncludeAmbiguous: z.boolean(),
+  isIncludeSymbols: z.boolean(),
   isIncludeNumbers: z.boolean(),
   isIncludeLowercase: z.boolean(),
   isIncludeUppercase: z.boolean(),
-  isIncludeSimilar: z.boolean(),
+  excludeSimilar: z.boolean(),
 })
 
 function InputForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      generatedPassword: '',
       passwordLength: 8,
       isIncludeNumbers: true,
       isIncludeLowercase: true,
       isIncludeUppercase: true,
-      isIncludeSimilar: true,
-      isIncludeSpecialSymbols: false,
-      isIncludeAmbiguous: false,
+      excludeSimilar: true,
+      isIncludeSymbols: false,
     },
   })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
+    const test = generatePassword({
+      length: values.passwordLength,
+      numbers: values.isIncludeNumbers,
+      lowercase: values.isIncludeLowercase,
+      uppercase: values.isIncludeUppercase,
+      excludeSimilarCharacters: values.excludeSimilar,
+      symbols: values.isIncludeSymbols,
+    })
+    form.setValue("generatedPassword", test)
   }
 
   function setPasswordLength(value: number[]) {
@@ -94,32 +102,15 @@ function InputForm() {
           />
           <FormField
             control={form.control}
-            name="isIncludeSpecialSymbols"
+            name="isIncludeSymbols"
             render={({field}) => (
               <FormItem>
                 <FormControl>
                   <CardWithSlider
                     onCheckedChange={field.onChange}
                     checked={field.value}
-                    label="Include special symbols"
-                    description="e.g. @#$%"
-                  />
-                </FormControl>
-                <FormMessage/>
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="isIncludeAmbiguous"
-            render={({field}) => (
-              <FormItem>
-                <FormControl>
-                  <CardWithSlider
-                    onCheckedChange={field.onChange}
-                    checked={field.value}
-                    label="Include ambiguous symbols"
-                    description="{ } [ ] ( ) / \ ' ` ~ , ; : . < >"
+                    label="Include symbols"
+                    description="e.g. !@#$%^&*()+_\-=}{[\]|:;/?.><,`~]"
                   />
                 </FormControl>
                 <FormMessage/>
@@ -179,7 +170,7 @@ function InputForm() {
           />
           <FormField
             control={form.control}
-            name="isIncludeSimilar"
+            name="excludeSimilar"
             render={({field}) => (
               <FormItem>
                 <FormControl>
