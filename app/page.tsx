@@ -1,75 +1,70 @@
 "use client"
 
-import {zodResolver} from "@hookform/resolvers/zod"
 import {useForm} from "react-hook-form"
-import * as z from "zod"
-import {
-  Card,
-  CardContent,
-  CardHeader,
-} from "@/components/ui/card"
+import {Card} from "@/components/ui/card"
 import {Label} from "@/components/ui/label"
 import {Slider} from "@/components/ui/slider"
+import { UpdateIcon } from "@radix-ui/react-icons"
+import * as z from "zod"
 
 import {Button} from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form"
 import {Input} from "@/components/ui/input"
-import {toast} from "@/components/ui/use-toast"
-import {useState} from "react";
-import cardWithSlider from "@/components/cardWithSlider";
 import CardWithSlider from "@/components/cardWithSlider";
+import {zodResolver} from "@hookform/resolvers/zod";
 
-const FormSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
+const formSchema = z.object({
+  generatedPassword: z.string().optional(),
+  passwordLength: z.number(),
+  isIncludeSpecialSymbols: z.boolean(),
+  isIncludeAmbiguous: z.boolean(),
+  isIncludeNumbers: z.boolean(),
+  isIncludeLowercase: z.boolean(),
+  isIncludeUppercase: z.boolean(),
+  isIncludeSimilar: z.boolean(),
 })
 
 function InputForm() {
-  const [passwordLength, setPasswordLength] = useState([8])
-  const [includeSpecialSymbols, setIncludeSpecialSymbols] = useState(false)
-  const [includeAmbiguousSymbols, setIncludeAmbiguousSymbols] = useState(false)
-  const [includeNumbers, setIncludeNumbers] = useState(true)
-  const [includeLowercase, setIncludeLowercase] = useState(true)
-  const [includeUppercase, setIncludeUppercase] = useState(true)
-  const [excludeSimilar, setExcludeSimilar] = useState(false)
-
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      passwordLength: 8,
+      isIncludeNumbers: true,
+      isIncludeLowercase: true,
+      isIncludeUppercase: true,
+      isIncludeSimilar: true,
+      isIncludeSpecialSymbols: false,
+      isIncludeAmbiguous: false,
+    },
   })
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    })
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log(values)
+  }
+
+  function setPasswordLength(value: number[]) {
+    form.setValue("passwordLength", value[0]);
   }
 
   return (
     <div className="container max-w-screen-sm mx-auto py-4">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField
             control={form.control}
-            name="username"
+            name="generatedPassword"
             render={({field}) => (
               <FormItem>
                 <FormControl>
                   <div className="flex flex-row space-x-4">
-                    <Input placeholder="Generated password" {...field} />
-                    <Button>Copy</Button>
+                    <Input className="h-12" placeholder="Generated password" {...field} />
+                    <Button className="w-5/12 h-12"><UpdateIcon className="mr-2 h-4 w-4" /> Re-generate</Button>
                   </div>
                 </FormControl>
                 <FormMessage/>
@@ -78,19 +73,19 @@ function InputForm() {
           />
           <FormField
             control={form.control}
-            name="username"
+            name="passwordLength"
             render={({field}) => (
               <FormItem>
                 <FormControl>
-                  <Card className="p-6 space-y-4">
-                    <div className="flex items-center justify-between space-y-2">
+                  <Card className="p-5 space-y-5">
+                    <div className="flex items-center justify-between">
                       <Label htmlFor="top-p">Password length</Label>
                       <span
-                        className="text-sm text-muted-foreground">
-                          {passwordLength}
+                        className="text-sm text-muted-foreground leading-none">
+                          {field.value}
                         </span>
                     </div>
-                    <Slider defaultValue={passwordLength} max={32} step={1} onValueChange={setPasswordLength}/>
+                    <Slider defaultValue={[field.value]} max={32} step={1} onValueChange={setPasswordLength}/>
                   </Card>
                 </FormControl>
                 <FormMessage/>
@@ -99,13 +94,13 @@ function InputForm() {
           />
           <FormField
             control={form.control}
-            name="username"
+            name="isIncludeSpecialSymbols"
             render={({field}) => (
               <FormItem>
                 <FormControl>
                   <CardWithSlider
-                    onCheckedChange={setIncludeSpecialSymbols}
-                    checked={includeSpecialSymbols}
+                    onCheckedChange={field.onChange}
+                    checked={field.value}
                     label="Include special symbols"
                     description="e.g. @#$%"
                   />
@@ -116,13 +111,13 @@ function InputForm() {
           />
           <FormField
             control={form.control}
-            name="username"
+            name="isIncludeAmbiguous"
             render={({field}) => (
               <FormItem>
                 <FormControl>
                   <CardWithSlider
-                    onCheckedChange={setIncludeAmbiguousSymbols}
-                    checked={includeAmbiguousSymbols}
+                    onCheckedChange={field.onChange}
+                    checked={field.value}
                     label="Include ambiguous symbols"
                     description="{ } [ ] ( ) / \ ' ` ~ , ; : . < >"
                   />
@@ -133,13 +128,13 @@ function InputForm() {
           />
           <FormField
             control={form.control}
-            name="username"
+            name="isIncludeNumbers"
             render={({field}) => (
               <FormItem>
                 <FormControl>
                   <CardWithSlider
-                    onCheckedChange={setIncludeNumbers}
-                    checked={includeNumbers}
+                    onCheckedChange={field.onChange}
+                    checked={field.value}
                     label="Include numbers"
                     description="e.g. 123456"
                   />
@@ -150,14 +145,14 @@ function InputForm() {
           />
           <FormField
             control={form.control}
-            name="username"
+            name="isIncludeLowercase"
             render={({field}) => (
               <FormItem>
                 <FormControl>
                   <CardWithSlider
-                    onCheckedChange={setIncludeLowercase}
-                    checked={includeLowercase}
-                    label="Include lowercase letters"
+                    onCheckedChange={field.onChange}
+                    checked={field.value}
+                    label="Include lowercase"
                     description="e.g. abcdefgh"
                   />
                 </FormControl>
@@ -167,14 +162,14 @@ function InputForm() {
           />
           <FormField
             control={form.control}
-            name="username"
+            name="isIncludeUppercase"
             render={({field}) => (
               <FormItem>
                 <FormControl>
                   <CardWithSlider
-                    onCheckedChange={setIncludeUppercase}
-                    checked={includeUppercase}
-                    label="Include uppercase letters"
+                    onCheckedChange={field.onChange}
+                    checked={field.value}
+                    label="Include uppercase"
                     description="e.g. ABCDEFGH"
                   />
                 </FormControl>
@@ -184,13 +179,13 @@ function InputForm() {
           />
           <FormField
             control={form.control}
-            name="username"
+            name="isIncludeSimilar"
             render={({field}) => (
               <FormItem>
                 <FormControl>
                   <CardWithSlider
-                    onCheckedChange={setExcludeSimilar}
-                    checked={excludeSimilar}
+                    onCheckedChange={field.onChange}
+                    checked={field.value}
                     label="Exclude similar characters"
                     description="e.g. i, l, 1, L, o, 0, O"
                   />
@@ -199,7 +194,6 @@ function InputForm() {
               </FormItem>
             )}
           />
-          <Button type="submit">Re-generate</Button>
         </form>
       </Form>
     </div>
