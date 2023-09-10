@@ -45,23 +45,31 @@ function InputForm() {
   })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    const test = generatePassword({
-      length: values.passwordLength,
-      numbers: values.isIncludeNumbers,
-      lowercase: values.isIncludeLowercase,
-      uppercase: values.isIncludeUppercase,
-      excludeSimilarCharacters: values.excludeSimilar,
-      symbols: values.isIncludeSymbols,
-    })
-    form.setValue("generatedPassword", test)
+    try {
+      form.setValue("generatedPassword", generatePassword({
+        length: values.passwordLength,
+        numbers: values.isIncludeNumbers,
+        lowercase: values.isIncludeLowercase,
+        uppercase: values.isIncludeUppercase,
+        excludeSimilarCharacters: values.excludeSimilar,
+        symbols: values.isIncludeSymbols,
+      }))
+    } catch (error: any) {
+      console.log(error.message)
+    }
   }
 
   function setPasswordLength(value: number[]) {
     form.setValue("passwordLength", value[0]);
   }
 
+  function checkSubmitDisable() {
+    const { isIncludeNumbers, isIncludeLowercase, isIncludeUppercase, isIncludeSymbols } = form.watch();
+    return !(isIncludeNumbers || isIncludeLowercase || isIncludeUppercase || isIncludeSymbols);
+  }
+
   return (
-    <div className="container max-w-screen-sm mx-auto py-4">
+    <div className="container max-w-screen-sm mx-auto h-screen py-6">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField
@@ -71,8 +79,8 @@ function InputForm() {
               <FormItem>
                 <FormControl>
                   <div className="flex flex-row space-x-4">
-                    <Input className="h-12" placeholder="Generated password" {...field} />
-                    <Button className="w-5/12 h-12"><UpdateIcon className="mr-2 h-4 w-4" /> Re-generate</Button>
+                    <Input readOnly className="h-12" placeholder="Generated password" {...field} />
+                    <Button className="w-4/12 h-12" disabled={checkSubmitDisable()}><UpdateIcon className="mr-2 h-4 w-4" /> Generate</Button>
                   </div>
                 </FormControl>
                 <FormMessage/>
@@ -93,7 +101,7 @@ function InputForm() {
                           {field.value}
                         </span>
                     </div>
-                    <Slider defaultValue={[field.value]} max={32} step={1} onValueChange={setPasswordLength}/>
+                    <Slider defaultValue={[field.value]} max={32} min={4} step={1} onValueChange={setPasswordLength}/>
                   </Card>
                 </FormControl>
                 <FormMessage/>
