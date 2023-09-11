@@ -68,16 +68,20 @@ function InputForm() {
   }
 
   return (
-    <div className="container max-w-screen-sm mx-auto h-screen py-6">
+    <div className="container max-w-screen-md mx-auto h-screen py-6">
       <Form {...form}>
-        <form className="space-y-4">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField
             control={form.control}
             name="generatedPassword"
             render={({field}) => (
               <FormItem>
                 <FormControl>
-                  <PasswordInput generateDisabled={checkSubmitDisable()} value={field.value}/>
+                  <PasswordInput
+                    generateDisabled={checkSubmitDisable()}
+                    value={field.value}
+                    submit={form.handleSubmit}
+                  />
                 </FormControl>
               </FormItem>
             )}
