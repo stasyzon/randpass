@@ -3,8 +3,13 @@ import {Button} from "@/components/ui/button"
 import {UpdateIcon, ClipboardCopyIcon} from "@radix-ui/react-icons"
 import {useCopyToClipboard} from "usehooks-ts";
 
-function PasswordInput({value}: any) {
+function PasswordInput({value, form}: any) {
   const [, copy] = useCopyToClipboard();
+
+  function checkSubmitDisable() {
+    const {isIncludeNumbers, isIncludeLowercase, isIncludeUppercase, isIncludeSymbols} = form.watch();
+    return !(isIncludeNumbers || isIncludeLowercase || isIncludeUppercase || isIncludeSymbols);
+  }
 
   return (
     <div className="space-y-4">
@@ -23,7 +28,7 @@ function PasswordInput({value}: any) {
         >
           <ClipboardCopyIcon className="mr-2"/> Copy
         </Button>
-        <Button variant="secondary" className="w-full">
+        <Button disabled={checkSubmitDisable()} variant="secondary" className="w-full">
           <UpdateIcon className="mr-2"/> Generate
         </Button>
       </div>

@@ -64,12 +64,6 @@ function InputForm() {
     form.setValue("passwordLength", value[0]);
   }
 
-  function checkSubmitDisable() {
-    const {isIncludeNumbers, isIncludeLowercase, isIncludeUppercase, isIncludeSymbols} = form.watch();
-    return !(isIncludeNumbers || isIncludeLowercase || isIncludeUppercase || isIncludeSymbols);
-  }
-
-
   return (
     <div className="flex flex-col items-center container max-w-screen-md mx-auto py-8 space-y-8">
       <Form {...form}>
@@ -81,7 +75,7 @@ function InputForm() {
               <FormItem>
                 <FormControl>
                   <PasswordInput
-                    generateDisabled={checkSubmitDisable()}
+                    form={form}
                     value={field.value}
                     submit={form.handleSubmit}
                   />
