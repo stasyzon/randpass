@@ -11,7 +11,7 @@ interface Props {
 
 function cardWithSwitcher({label, checked, onCheckedChange, description}: Props) {
   return (
-    <Card className="flex flex-row items-center justify-between p-5">
+    <Card className="flex flex-row flex-wrap items-center justify-between p-5">
       <div className="flex flex-col space-y-2">
         <Label>{label}</Label>
         <span className="text-sm text-muted-foreground">{description}</span>
