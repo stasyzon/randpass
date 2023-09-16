@@ -18,6 +18,10 @@ import CardWithSlider from "@/components/cardWithSwitcher";
 import {zodResolver} from "@hookform/resolvers/zod";
 import PasswordInput from "@/components/passwordInput";
 import {Separator} from "@/components/ui/separator"
+import {Button} from "@/components/ui/button";
+import {useCopyToClipboard} from "usehooks-ts";
+import {ClipboardCopyIcon, UpdateIcon} from "@radix-ui/react-icons"
+
 
 const formSchema = z.object({
   generatedPassword: z.string().optional(),
@@ -67,6 +71,8 @@ function InputForm() {
     return !(isIncludeNumbers || isIncludeLowercase || isIncludeUppercase || isIncludeSymbols);
   }
 
+  const [, copy] = useCopyToClipboard();
+
   return (
     <div className="flex flex-col items-center container max-w-screen-md mx-auto py-6 space-y-8">
       <Form {...form}>
@@ -86,27 +92,41 @@ function InputForm() {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="passwordLength"
-            render={({field}) => (
-              <FormItem>
-                <FormControl>
-                  <Card className="p-5 space-y-5">
-                    <div className="flex items-center justify-between">
-                      <Label htmlFor="top-p">Password length</Label>
-                      <span
-                        className="text-sm text-muted-foreground leading-none">
+          <div className="grid sm:grid-cols-2 gap-4">
+            <Button
+              onClick={() => copy(form.getValues('generatedPassword') || '')}
+              type="button"
+              className="w-full"
+              variant="secondary"
+            >
+              <ClipboardCopyIcon className="mr-2"/> Copy
+            </Button>
+            <Button variant="secondary" className="w-full">
+              <UpdateIcon className="mr-2"/> Generate
+            </Button>
+          </div>
+          <Separator className="w-2/4 mx-auto"/>
+          <div className="grid sm:grid-cols-2 gap-4">
+            <FormField
+              control={form.control}
+              name="passwordLength"
+              render={({field}) => (
+                <FormItem>
+                  <FormControl>
+                    <Card className="p-5 space-y-5">
+                      <div className="flex items-center justify-between">
+                        <Label htmlFor="top-p">Password length</Label>
+                        <span
+                          className="text-sm text-muted-foreground leading-none">
                           {field.value}
                         </span>
-                    </div>
-                    <Slider defaultValue={[field.value]} max={24} min={4} step={1} onValueChange={setPasswordLength}/>
-                  </Card>
-                </FormControl>
-              </FormItem>
-            )}
-          />
-          <div className="grid sm:grid-cols-2 gap-4">
+                      </div>
+                      <Slider defaultValue={[field.value]} max={24} min={4} step={1} onValueChange={setPasswordLength}/>
+                    </Card>
+                  </FormControl>
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="isIncludeSymbols"
