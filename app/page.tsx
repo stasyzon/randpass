@@ -19,7 +19,7 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import PasswordInput from "@/components/passwordInput";
 import InfoBlock from "@/components/InfoBlock";
 import {useEffect} from "react";
-
+import {Toaster} from "@/components/ui/toaster";
 
 const formSchema = z.object({
   generatedPassword: z.string().optional(),
@@ -201,6 +201,7 @@ function InputForm() {
         alt="Picture of the author"
       />
       <InfoBlock/>
+      <Toaster/>
     </div>
   )
 }
