@@ -6,6 +6,36 @@ import {ThemeProvider} from "@/components/theme-provider"
 export const metadata: Metadata = {
   title: 'Password Generator - RandPass',
   description: 'Strong passwords made simple. Customize your security level and generate passwords you can trust',
+  themeColor: '#171717',
+  icons: {
+    icon: [
+      {
+        media: '(prefers-color-scheme: light)',
+        url: '/icon-light.png',
+        href: '/icon-light.png',
+      },
+      {
+        media: '(prefers-color-scheme: dark)',
+        url: '/icon.png',
+        href: '/icon-dark.png',
+      },
+    ],
+  },
+  keywords: [
+    "Password Generator",
+    "Secure Password",
+    "Customizable Password",
+    "Free Password Generator",
+    "Strong Password",
+    "Password Length",
+    "Special Symbols",
+    "Lowercase",
+    "Uppercase",
+    "Numbers",
+    "One-Click Copy",
+    "Regenerate Password"
+  ],
+  creator: 'Stanislav',
 }
 
 export default function RootLayout({children}: {
