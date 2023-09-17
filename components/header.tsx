@@ -2,17 +2,12 @@ import ModeToggle from "@/components/themeToggle";
 
 function Header() {
   return (
-    <div className="w-full flex flex-row justify-between items-center">
-      <div className="w-full flex flex-row items-center space-x-2">
+    <div className="w-full flex flex-row justify-center items-center">
+      <div className="w-full flex flex-col items-start flex-wrap">
         <h4 className="text-xl font-semibold tracking-tight">
           RandPass
         </h4>
-        <h4 className="text-xl font-semibold tracking-tight">
-          -
-        </h4>
-        <h4 className="text-xl font-semibold tracking-tight text-neutral-400">
-          secure password generator
-        </h4>
+        <p className="text-sm text-muted-foreground">Secure password generator</p>
       </div>
       <ModeToggle/>
     </div>
