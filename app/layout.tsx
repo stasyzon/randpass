@@ -1,6 +1,7 @@
 import './globals.css'
 import type {Metadata} from 'next'
 import {Analytics} from '@vercel/analytics/react';
+import {ThemeProvider} from "@/components/theme-provider"
 
 export const metadata: Metadata = {
   title: 'Password Generator - RandPass',
@@ -11,11 +12,16 @@ export default function RootLayout({children}: {
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9980612679743872"
             crossOrigin="anonymous"></script>
     <Analytics/>
-    <body>{children}</body>
+
+    <body>
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      {children}
+    </ThemeProvider>
+    </body>
     </html>
   )
 }
