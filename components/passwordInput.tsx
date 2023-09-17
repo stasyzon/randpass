@@ -33,10 +33,10 @@ function PasswordInput({value, form}: any) {
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild className="w-full">
-            <Card onClick={onCopyClick} className="p-6 flex flex-col items-center space-y-4 cursor-pointer w-full">
-              <div className="flex flex-row">
-                <span className="text-4xl font-mono mr-2 h-9">{value || 'Loading...'}</span>
-                <CopyIcon className="text-neutral-500"/>
+            <Card onClick={onCopyClick} className="cursor-pointer w-full relative">
+              <CopyIcon className="text-neutral-500 absolute top-2 right-2"/>
+              <div className="w-full h-full overflow-x-auto text-center p-6">
+                <span className="text-lg md:text-4xl font-mono leading-none">{value || 'Loading...'}</span>
               </div>
             </Card>
           </TooltipTrigger>
