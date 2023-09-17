@@ -17,8 +17,8 @@ import {
 import CardWithSlider from "@/components/cardWithSwitcher";
 import {zodResolver} from "@hookform/resolvers/zod";
 import PasswordInput from "@/components/passwordInput";
-import {Separator} from "@/components/ui/separator"
 import InfoBlock from "@/components/InfoBlock";
+import {useEffect} from "react";
 
 
 const formSchema = z.object({
@@ -60,6 +60,10 @@ function InputForm() {
     }
   }
 
+  useEffect(() => {
+    form.handleSubmit(onSubmit)();
+  }, []);
+
   function setPasswordLength(value: number[]) {
     form.setValue("passwordLength", value[0]);
   }
@@ -83,7 +87,6 @@ function InputForm() {
               </FormItem>
             )}
           />
-          <Separator className="w-2/4 mx-auto"/>
           <div>
             <div className="grid sm:grid-cols-2 gap-4">
               <FormField
@@ -191,7 +194,6 @@ function InputForm() {
           </div>
         </form>
       </Form>
-      <Separator className="w-2/4 mx-auto"/>
       <Image
         src="/support.png"
         width={468}

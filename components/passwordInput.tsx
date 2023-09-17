@@ -15,7 +15,7 @@ function PasswordInput({value, form}: any) {
     <div className="space-y-4">
       <Card className="px-4 py-10 w-full flex flex-row justify-center items-center relative">
         {!value && (
-          <span className="text-3xl font-mono h-9 leading-normal text-neutral-500">Click &quot;Generate&quot;</span>
+          <span className="text-3xl font-mono h-9 leading-normal text-neutral-500">Loading...</span>
         )}
         <span className="text-3xl font-mono h-9 leading-normal">{value}</span>
       </Card>
