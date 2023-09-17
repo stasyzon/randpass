@@ -20,6 +20,8 @@ import PasswordInput from "@/components/passwordInput";
 import InfoBlock from "@/components/InfoBlock";
 import {useEffect} from "react";
 import {Toaster} from "@/components/ui/toaster";
+import ModeToggle from "@/components/themeToggle";
+import Header from "@/components/header";
 
 const formSchema = z.object({
   generatedPassword: z.string().optional(),
@@ -70,6 +72,7 @@ function InputForm() {
 
   return (
     <div className="flex flex-col items-center container max-w-screen-md mx-auto py-8 space-y-8">
+      <Header/>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 w-full">
           <FormField
