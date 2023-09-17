@@ -1,8 +1,14 @@
 import {Card} from "@/components/ui/card";
 import {Button} from "@/components/ui/button"
-import {UpdateIcon, ClipboardCopyIcon} from "@radix-ui/react-icons"
+import {UpdateIcon, CopyIcon} from "@radix-ui/react-icons"
 import {useCopyToClipboard} from "usehooks-ts";
 import {useToast} from "@/components/ui/use-toast";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 function PasswordInput({value, form}: any) {
   const [, copy] = useCopyToClipboard();
@@ -23,26 +29,23 @@ function PasswordInput({value, form}: any) {
   }
 
   return (
-    <div className="space-y-4">
-      <Card className="px-4 py-10 w-full flex flex-row justify-center items-center relative">
-        {!value && (
-          <span className="text-3xl font-mono h-9 leading-normal text-neutral-500">Loading...</span>
-        )}
-        <span className="text-3xl font-mono h-9 leading-normal">{value}</span>
-      </Card>
-      <div className="grid sm:grid-cols-2 gap-4">
-        <Button
-          onClick={onCopyClick}
-          type="button"
-          className="w-full"
-          variant="secondary"
-        >
-          <ClipboardCopyIcon className="mr-2"/> Copy
-        </Button>
-        <Button disabled={checkSubmitDisable()} variant="secondary" className="w-full">
-          <UpdateIcon className="mr-2"/> Generate
-        </Button>
-      </div>
+    <div className="space-y-2">
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild className="w-full">
+            <Card onClick={onCopyClick} className="p-6 flex flex-col items-center space-y-4 cursor-pointer w-full">
+              <div className="flex flex-row">
+                <span className="text-4xl font-mono mr-2 h-9">{value || 'Loading...'}</span>
+                <CopyIcon className="text-neutral-500"/>
+              </div>
+            </Card>
+          </TooltipTrigger>
+          <TooltipContent>Click to copy</TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+      <Button disabled={checkSubmitDisable()} className="w-full">
+        <UpdateIcon className="mr-2"/> Generate
+      </Button>
     </div>
   )
 }
