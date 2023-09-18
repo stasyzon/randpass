@@ -20,7 +20,6 @@ import PasswordInput from "@/components/passwordInput";
 import InfoBlock from "@/components/InfoBlock";
 import {useEffect} from "react";
 import {Toaster} from "@/components/ui/toaster";
-import ModeToggle from "@/components/themeToggle";
 import Header from "@/components/header";
 
 const formSchema = z.object({
