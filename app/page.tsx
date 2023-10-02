@@ -6,7 +6,6 @@ import {Label} from "@/components/ui/label"
 import {Slider} from "@/components/ui/slider"
 import * as z from "zod"
 import {generatePassword} from "@/lib/generate"
-import Image from 'next/image'
 
 import {
   Form,
@@ -196,12 +195,6 @@ function InputForm() {
           </div>
         </form>
       </Form>
-      <Image
-        src="/support.png"
-        width={468}
-        height={60}
-        alt="Picture of the author"
-      />
       <InfoBlock/>
       <Toaster/>
     </div>
