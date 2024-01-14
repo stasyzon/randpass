@@ -105,7 +105,7 @@ function InfoBlock() {
               </strong>
               Whenever possible, enable 2FA on your accounts. A strong password
               coupled with a second form of verification drastically improves
-              your account's security
+              your account security
             </li>
           </ul>
         </div>
