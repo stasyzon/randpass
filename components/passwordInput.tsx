@@ -2,7 +2,7 @@ import {Card} from "@/components/ui/card";
 import {Button} from "@/components/ui/button"
 import {UpdateIcon, CopyIcon} from "@radix-ui/react-icons"
 import {useCopyToClipboard} from "usehooks-ts";
-import {useToast} from "@/components/ui/use-toast";
+import { toast } from "sonner"
 import {
   Tooltip,
   TooltipContent,
@@ -12,7 +12,6 @@ import {
 
 function PasswordInput({value, form}: any) {
   const [, copy] = useCopyToClipboard();
-  const {toast} = useToast()
 
   function checkSubmitDisable() {
     const {isIncludeNumbers, isIncludeLowercase, isIncludeUppercase, isIncludeSymbols} = form.watch();
@@ -22,9 +21,7 @@ function PasswordInput({value, form}: any) {
   function onCopyClick() {
     const valueToCopy = value || '';
     copy(valueToCopy).then(r => {
-      toast({
-        description: "Copied to clipboard ✅"
-      })
+      toast("Copied to clipboard ✅")
     });
   }
 

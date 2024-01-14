@@ -13,7 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import PasswordInput from "@/components/passwordInput";
 import InfoBlock from "@/components/InfoBlock";
 import { useEffect } from "react";
-import { Toaster } from "@/components/ui/toaster";
+import { Toaster } from "@/components/ui/sonner"
 import Header from "@/components/header";
 import Banner from "@/components/ui/banner";
 
