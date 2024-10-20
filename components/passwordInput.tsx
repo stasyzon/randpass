@@ -1,8 +1,7 @@
 import {Card} from "@/components/ui/card";
-import {Button} from "@/components/ui/button"
-import {UpdateIcon, CopyIcon} from "@radix-ui/react-icons"
+import {CopyIcon} from "@radix-ui/react-icons"
 import {useCopyToClipboard} from "usehooks-ts";
-import {toast} from "sonner"
+import { toast } from "sonner"
 import {
   Tooltip,
   TooltipContent,
@@ -10,17 +9,12 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 
-function PasswordInput({value, form}: any) {
+function PasswordInput({value}: any) {
   const [, copy] = useCopyToClipboard();
-
-  function checkSubmitDisable() {
-    const {isIncludeNumbers, isIncludeLowercase, isIncludeUppercase, isIncludeSymbols} = form.watch();
-    return !(isIncludeNumbers || isIncludeLowercase || isIncludeUppercase || isIncludeSymbols);
-  }
 
   function onCopyClick() {
     const valueToCopy = value || '';
-    copy(valueToCopy).then(r => {
+    copy(valueToCopy).then(() => {
       toast("Copied to clipboard ✅")
     });
   }
@@ -40,12 +34,6 @@ function PasswordInput({value, form}: any) {
           <TooltipContent>Click to copy</TooltipContent>
         </Tooltip>
       </TooltipProvider>
-      <Button
-        disabled={checkSubmitDisable()}
-        className={`w-full ${checkSubmitDisable() ? 'disabled:cursor-not-allowed' : ''}`}
-      >
-        <UpdateIcon className="mr-2"/> Generate
-      </Button>
     </div>
   )
 }

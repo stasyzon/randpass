@@ -1,21 +1,21 @@
 "use client";
 
-import { useForm } from "react-hook-form";
-import { Card } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Slider } from "@/components/ui/slider";
+import {useForm} from "react-hook-form";
+import {Card} from "@/components/ui/card";
+import {Label} from "@/components/ui/label";
+import {Slider} from "@/components/ui/slider";
 import * as z from "zod";
-import { generatePassword } from "@/lib/generate";
+import {generatePassword} from "@/lib/generate";
 
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
+import {Form, FormControl, FormField, FormItem} from "@/components/ui/form";
 import CardWithSlider from "@/components/cardWithSwitcher";
-import { zodResolver } from "@hookform/resolvers/zod";
+import {zodResolver} from "@hookform/resolvers/zod";
 import PasswordInput from "@/components/passwordInput";
-import InfoBlock from "@/components/InfoBlock";
-import { useEffect } from "react";
-import { Toaster } from "@/components/ui/sonner"
+import {useEffect} from "react";
+import {Toaster} from "@/components/ui/sonner"
 import Header from "@/components/header";
-import Banner from "@/components/ui/banner";
+import {Button} from "@/components/ui/button";
+import {UpdateIcon} from "@radix-ui/react-icons";
 
 const formSchema = z.object({
   generatedPassword: z.string().optional(),
@@ -67,11 +67,15 @@ function InputForm() {
     form.setValue("passwordLength", value[0]);
   }
 
+  function checkSubmitDisable() {
+    const {isIncludeNumbers, isIncludeLowercase, isIncludeUppercase, isIncludeSymbols} = form.watch();
+    return !(isIncludeNumbers || isIncludeLowercase || isIncludeUppercase || isIncludeSymbols);
+  }
+
   return (
     <div>
-      <Banner/>
       <div className="flex flex-col items-center container max-w-screen-md mx-auto py-8 space-y-8">
-        <Header />
+        <Header/>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -80,7 +84,7 @@ function InputForm() {
             <FormField
               control={form.control}
               name="generatedPassword"
-              render={({ field }) => (
+              render={({field}) => (
                 <FormItem>
                   <FormControl>
                     <PasswordInput
@@ -97,7 +101,7 @@ function InputForm() {
                 <FormField
                   control={form.control}
                   name="passwordLength"
-                  render={({ field }) => (
+                  render={({field}) => (
                     <FormItem>
                       <FormControl>
                         <Card className="p-5 space-y-5">
@@ -122,7 +126,7 @@ function InputForm() {
                 <FormField
                   control={form.control}
                   name="isIncludeSymbols"
-                  render={({ field }) => (
+                  render={({field}) => (
                     <FormItem className="w-full">
                       <FormControl>
                         <CardWithSlider
@@ -138,7 +142,7 @@ function InputForm() {
                 <FormField
                   control={form.control}
                   name="isIncludeNumbers"
-                  render={({ field }) => (
+                  render={({field}) => (
                     <FormItem className="w-full">
                       <FormControl>
                         <CardWithSlider
@@ -154,7 +158,7 @@ function InputForm() {
                 <FormField
                   control={form.control}
                   name="isIncludeLowercase"
-                  render={({ field }) => (
+                  render={({field}) => (
                     <FormItem className="w-full">
                       <FormControl>
                         <CardWithSlider
@@ -170,7 +174,7 @@ function InputForm() {
                 <FormField
                   control={form.control}
                   name="isIncludeUppercase"
-                  render={({ field }) => (
+                  render={({field}) => (
                     <FormItem className="w-full">
                       <FormControl>
                         <CardWithSlider
@@ -186,7 +190,7 @@ function InputForm() {
                 <FormField
                   control={form.control}
                   name="excludeSimilar"
-                  render={({ field }) => (
+                  render={({field}) => (
                     <FormItem className="w-full">
                       <FormControl>
                         <CardWithSlider
@@ -201,10 +205,15 @@ function InputForm() {
                 />
               </div>
             </div>
+            <Button
+              disabled={checkSubmitDisable()}
+              className={`w-full ${checkSubmitDisable() ? 'disabled:cursor-not-allowed' : ''}`}
+            >
+              <UpdateIcon className="mr-2"/> Generate
+            </Button>
           </form>
         </Form>
-        <InfoBlock />
-        <Toaster />
+        <Toaster/>
       </div>
     </div>
   );
