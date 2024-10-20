@@ -4,10 +4,13 @@ import {Analytics} from '@vercel/analytics/react';
 import {ThemeProvider} from "@/components/theme-provider"
 import Script from "next/script";
 
+export const viewport = {
+  themeColor: '#171717',
+}
+
 export const metadata: Metadata = {
   title: 'Password Generator - RandPass',
   description: 'Strong passwords made simple. Customize your security level and generate passwords you can trust',
-  themeColor: '#171717',
   icons: {
     icon: [
       {
