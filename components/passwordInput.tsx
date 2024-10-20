@@ -2,7 +2,7 @@ import {Card} from "@/components/ui/card";
 import {Button} from "@/components/ui/button"
 import {UpdateIcon, CopyIcon} from "@radix-ui/react-icons"
 import {useCopyToClipboard} from "usehooks-ts";
-import { toast } from "sonner"
+import {toast} from "sonner"
 import {
   Tooltip,
   TooltipContent,
@@ -40,7 +40,10 @@ function PasswordInput({value, form}: any) {
           <TooltipContent>Click to copy</TooltipContent>
         </Tooltip>
       </TooltipProvider>
-      <Button disabled={checkSubmitDisable()} className="w-full">
+      <Button
+        disabled={checkSubmitDisable()}
+        className={`w-full ${checkSubmitDisable() ? 'disabled:cursor-not-allowed' : ''}`}
+      >
         <UpdateIcon className="mr-2"/> Generate
       </Button>
     </div>

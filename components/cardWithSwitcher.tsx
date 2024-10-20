@@ -1,6 +1,7 @@
-import {Card} from "@/components/ui/card";
-import {Switch} from "@/components/ui/switch"
-import {Label} from "@/components/ui/label"
+import { Card } from "@/components/ui/card";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
+import { MouseEvent } from "react";
 
 interface Props {
   label: string;
@@ -9,11 +10,18 @@ interface Props {
   onCheckedChange: (checked: boolean) => void;
 }
 
-function cardWithSwitcher({label, checked, onCheckedChange, description}: Props) {
+function cardWithSwitcher({ label, checked, onCheckedChange, description }: Props) {
+  const handleClick = (event: MouseEvent) => {
+    // Prevent the Switch's onClick from being triggered
+    if ((event.target as HTMLElement).tagName !== 'INPUT') {
+      onCheckedChange(!checked);
+    }
+  };
+
   return (
-    <Card className="flex flex-row flex-wrap items-center justify-between p-5">
+    <Card className="flex flex-row flex-wrap items-center justify-between p-5 select-none hover:bg-gray-50 cursor-pointer" onClick={handleClick}>
       <div className="flex flex-col space-y-2">
-        <Label>{label}</Label>
+        <Label className="cursor-pointer">{label}</Label>
         <span className="text-sm text-muted-foreground">{description}</span>
       </div>
       <Switch
@@ -21,7 +29,7 @@ function cardWithSwitcher({label, checked, onCheckedChange, description}: Props)
         onCheckedChange={onCheckedChange}
       />
     </Card>
-  )
+  );
 }
 
 export default cardWithSwitcher;
