@@ -19,7 +19,7 @@ function cardWithSwitcher({ label, checked, onCheckedChange, description }: Prop
   };
 
   return (
-    <Card className="flex flex-row flex-wrap items-center justify-between p-5 select-none hover:bg-gray-50 cursor-pointer" onClick={handleClick}>
+    <Card className="flex flex-row flex-wrap items-center justify-between p-5 select-none hover:bg-secondary-hover cursor-pointer" onClick={handleClick}>
       <div className="flex flex-col space-y-2">
         <Label className="cursor-pointer">{label}</Label>
         <span className="text-sm text-muted-foreground">{description}</span>

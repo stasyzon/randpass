@@ -1,7 +1,7 @@
 import {Card} from "@/components/ui/card";
 import {CopyIcon} from "@radix-ui/react-icons"
 import {useCopyToClipboard} from "usehooks-ts";
-import { toast } from "sonner"
+import {toast} from "sonner"
 import {
   Tooltip,
   TooltipContent,
@@ -26,8 +26,8 @@ function PasswordInput({value}: any) {
           <TooltipTrigger asChild className="w-full">
             <Card onClick={onCopyClick} className="cursor-pointer w-full relative">
               <CopyIcon className="text-neutral-500 absolute top-2 right-2"/>
-              <div className="w-full h-full overflow-x-auto text-center p-6">
-                <span className="text-lg md:text-4xl font-mono leading-none">{value || 'Loading...'}</span>
+              <div className="w-full overflow-x-auto text-center p-6">
+                <span className="text-4xl font-mono break-all">{value || 'Loading...'}</span>
               </div>
             </Card>
           </TooltipTrigger>

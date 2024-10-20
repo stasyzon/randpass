@@ -74,28 +74,31 @@ function InputForm() {
 
   return (
     <div>
-      <div className="flex flex-col items-center container max-w-screen-md mx-auto py-8 space-y-8">
+      <div className="flex flex-col items-center container max-w-screen-md mx-auto py-8">
         <Header/>
         <Form {...form}>
           <form
+            id="passwordForm"
             onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-6 w-full"
+            className="w-full mt-8"
           >
-            <FormField
-              control={form.control}
-              name="generatedPassword"
-              render={({field}) => (
-                <FormItem>
-                  <FormControl>
-                    <PasswordInput
-                      form={form}
-                      value={field.value}
-                      submit={form.handleSubmit}
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
+            <div className="mb-8">
+              <FormField
+                control={form.control}
+                name="generatedPassword"
+                render={({field}) => (
+                  <FormItem>
+                    <FormControl>
+                      <PasswordInput
+                        form={form}
+                        value={field.value}
+                        submit={form.handleSubmit}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </div>
             <div>
               <div className="grid sm:grid-cols-2 gap-4">
                 <FormField
@@ -205,14 +208,17 @@ function InputForm() {
                 />
               </div>
             </div>
-            <Button
-              disabled={checkSubmitDisable()}
-              className={`w-full ${checkSubmitDisable() ? 'disabled:cursor-not-allowed' : ''}`}
-            >
-              <UpdateIcon className="mr-2"/> Generate
-            </Button>
           </form>
         </Form>
+        <div className="sticky bottom-0 w-screen bg-background py-8 flex items-center justify-center">
+          <Button
+            form="passwordForm"
+            disabled={checkSubmitDisable()}
+            className={`w-full mx-8 ${checkSubmitDisable() ? 'disabled:cursor-not-allowed' : ''}`}
+          >
+            <UpdateIcon className="mr-2"/> Generate
+          </Button>
+        </div>
         <Toaster/>
       </div>
     </div>
