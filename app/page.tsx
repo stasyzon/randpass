@@ -210,7 +210,7 @@ function InputForm() {
             </div>
           </form>
         </Form>
-        <div className="sticky bottom-0 w-screen bg-background py-8 flex items-center justify-center">
+        <div className="sticky bottom-0 w-screen bg-background py-8 flex items-center justify-center max-w-screen-md">
           <Button
             form="passwordForm"
             disabled={checkSubmitDisable()}
