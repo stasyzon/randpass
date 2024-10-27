@@ -1,13 +1,14 @@
 import {useState} from 'react';
 import {Card} from "@/components/ui/card";
 import {Copy, Check} from "lucide-react";
-import {useCopyToClipboard} from "usehooks-ts";
+import {useCopyToClipboard} from "@/hooks/useCopyToClipboard";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import {useTranslations} from "next-intl";
 
 function PasswordInput({value}: any) {
   const [isCopied, setIsCopied] = useState(false);
@@ -17,9 +18,17 @@ function PasswordInput({value}: any) {
     const valueToCopy = value || '';
     copy(valueToCopy).then(() => {
       setIsCopied(true);
-      setTimeout(() => setIsCopied(false), 2000); // Reset after 2 seconds
+      setTimeout(() => setIsCopied(false), 2000);
     });
   }
+
+  function handleKeyDown(event: React.KeyboardEvent) {
+    if (event.key === 'Enter') {
+      onCopyClick();
+    }
+  }
+
+  const t = useTranslations('PasswordInput');
 
   return (
     <div className="space-y-2">
@@ -28,13 +37,17 @@ function PasswordInput({value}: any) {
           <TooltipTrigger asChild className="w-full">
             <Card
               onClick={onCopyClick}
+              onKeyDown={handleKeyDown}
+              tabIndex={0}
+              role="button" // Indicate that the Card behaves like a button
+              aria-label={t('clickToCopy')} // Provide a descriptive label
               className={`cursor-pointer w-full relative group`}
             >
               <div
                 className="flex items-center space-x-1 absolute top-2 right-2 text-green-500 text-xs transition-opacity duration-300 ease-out"
                 style={{opacity: isCopied ? 1 : 0}}
               >
-                <span>Copied!</span>
+                <span>{t('copied')}</span>
                 <Check size="16"/>
               </div>
               <Copy
@@ -46,7 +59,7 @@ function PasswordInput({value}: any) {
               </div>
             </Card>
           </TooltipTrigger>
-          <TooltipContent>Click to copy</TooltipContent>
+          <TooltipContent>{t('clickToCopy')}</TooltipContent>
         </Tooltip>
       </TooltipProvider>
     </div>

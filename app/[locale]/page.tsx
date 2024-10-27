@@ -15,6 +15,7 @@ import {useEffect, useState} from "react";
 import Header from "@/components/header";
 import {Button} from "@/components/ui/button";
 import {RefreshCcw} from "lucide-react"
+import {useTranslations} from 'next-intl';
 
 const formSchema = z.object({
   generatedPassword: z.string().optional(),
@@ -61,7 +62,7 @@ function InputForm() {
         })
       );
     } catch (error: any) {
-      console.log(error.message);
+      console.error(error.message);
     }
   }
 
@@ -77,6 +78,8 @@ function InputForm() {
     const {isIncludeNumbers, isIncludeLowercase, isIncludeUppercase, isIncludeSymbols} = form.watch();
     return !(isIncludeNumbers || isIncludeLowercase || isIncludeUppercase || isIncludeSymbols);
   }
+
+  const t = useTranslations('InputForm');
 
   return (
     <div>
@@ -115,7 +118,7 @@ function InputForm() {
                       <FormControl>
                         <Card className="p-5 space-y-5">
                           <div className="flex items-center justify-between">
-                            <Label htmlFor="top-p">Password length</Label>
+                            <Label htmlFor="top-p">{t('passwordLength')}</Label>
                             <span className="text-sm text-muted-foreground leading-none">
                               {field.value}
                             </span>
@@ -141,8 +144,8 @@ function InputForm() {
                         <CardWithSlider
                           onCheckedChange={field.onChange}
                           checked={field.value}
-                          label="Include symbols"
-                          description="e.g. !@#$%..."
+                          label={t('includeSymbols')}
+                          description={t('includeSymbolsDescription')}
                         />
                       </FormControl>
                     </FormItem>
@@ -157,8 +160,8 @@ function InputForm() {
                         <CardWithSlider
                           onCheckedChange={field.onChange}
                           checked={field.value}
-                          label="Include numbers"
-                          description="e.g. 123456"
+                          label={t('includeNumbers')}
+                          description={t('includeNumbersDescription')}
                         />
                       </FormControl>
                     </FormItem>
@@ -173,8 +176,8 @@ function InputForm() {
                         <CardWithSlider
                           onCheckedChange={field.onChange}
                           checked={field.value}
-                          label="Include lowercase"
-                          description="e.g. abcdefgh"
+                          label={t('includeLowercase')}
+                          description={t('includeLowercaseDescription')}
                         />
                       </FormControl>
                     </FormItem>
@@ -189,8 +192,8 @@ function InputForm() {
                         <CardWithSlider
                           onCheckedChange={field.onChange}
                           checked={field.value}
-                          label="Include uppercase"
-                          description="e.g. ABCDEFGH"
+                          label={t('includeUppercase')}
+                          description={t('includeUppercaseDescription')}
                         />
                       </FormControl>
                     </FormItem>
@@ -205,8 +208,8 @@ function InputForm() {
                         <CardWithSlider
                           onCheckedChange={field.onChange}
                           checked={field.value}
-                          label="Exclude similar characters"
-                          description="e.g. i, l, 1, L, o, 0, O"
+                          label={t('excludeSimilar')}
+                          description={t('excludeSimilarDescription')}
                         />
                       </FormControl>
                     </FormItem>
@@ -223,7 +226,7 @@ function InputForm() {
             className={`button w-full h-12 mx-8 ${checkSubmitDisable() ? 'disabled:cursor-not-allowed' : ''}`}
             onClick={handleClick}
           >
-            <RefreshCcw size="16" className={`mr-2 ${isSpinning ? 'spin' : ''}`}/> Generate
+            <RefreshCcw size="16" className={`mr-2 ${isSpinning ? 'spin' : ''}`}/> {t('generateButton')}
           </Button>
         </div>
       </div>

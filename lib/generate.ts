@@ -135,13 +135,3 @@ export const generatePassword = (options?: Options): string => {
 
   return generate(options, pool);
 };
-
-export const generateMultiple = (amount: number, options?: Options): string[] => {
-  const passwords: string[] = [];
-
-  for (let i = 0; i < amount; i++) {
-    passwords[i] = generatePassword(options);
-  }
-
-  return passwords;
-};

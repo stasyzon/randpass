@@ -1,26 +1,22 @@
 import ModeToggle from "@/components/themeToggle";
-import {Coolshape} from "coolshapes-react";
-import {Lock} from 'lucide-react';
+import LanguageToggle from "@/components/languageToggle";
+import {useTranslations} from 'next-intl';
 
 function Header() {
+  const t = useTranslations('Header');
+
   return (
     <div className="w-full flex flex-row justify-center items-center">
-      <div className="relative mr-2">
-        <Coolshape
-          type="misc"
-          index={8}
-          noise={true}
-          size={48}
-        />
-        <Lock color="#fff" className="absolute inset-0 m-auto"/>
-      </div>
       <div className="w-full flex flex-col items-start flex-wrap">
         <h4 className="text-xl font-semibold tracking-tight">
-          RandPass
+          {t('title')}
         </h4>
-        <p className="text-sm text-muted-foreground">Secure password generator</p>
+        <p className="text-sm text-muted-foreground">{t('description')}</p>
       </div>
-      <ModeToggle/>
+      <div className="flex flex-row space-x-4">
+        <LanguageToggle/>
+        <ModeToggle/>
+      </div>
     </div>
   )
 }

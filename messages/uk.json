@@ -1,0 +1,36 @@
+{
+  "Header": {
+    "title": "RandPass",
+    "description": "Безпечний генератор паролів"
+  },
+  "InputForm": {
+    "passwordLength": "Довжина пароля",
+    "includeSymbols": "Використовувати символи",
+    "includeSymbolsDescription": "наприклад, !@#$%...",
+    "includeNumbers": "Використовувати цифри",
+    "includeNumbersDescription": "наприклад, 123456",
+    "includeLowercase": "Використовувати малі літери",
+    "includeLowercaseDescription": "наприклад, abcdefgh",
+    "includeUppercase": "Використовувати великі літери",
+    "includeUppercaseDescription": "наприклад, ABCDEFGH",
+    "excludeSimilar": "Не використовувати схожі символи",
+    "excludeSimilarDescription": "наприклад, i, l, 1, L, o, 0, O",
+    "generateButton": "Генерувати"
+  },
+  "PasswordInput": {
+    "clickToCopy": "Натисніть, щоб скопіювати",
+    "copied": "Скопійовано!"
+  },
+  "ThemeToggle": {
+    "dark": "Темна",
+    "light": "Світла",
+    "system": "Системна",
+    "toggleTheme": "Змінити тему"
+  },
+    "LanguageToggle": {
+    "en": "Англійська",
+    "uk": "Українська",
+    "es": "Іспанська",
+    "toggleLanguage": "Змінити мову"
+  }
+}

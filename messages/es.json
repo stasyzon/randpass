@@ -1,0 +1,36 @@
+{
+  "Header": {
+    "title": "RandPass",
+    "description": "Generador de contraseñas seguro"
+  },
+  "InputForm": {
+    "passwordLength": "Longitud de la contraseña",
+    "includeSymbols": "Incluir símbolos",
+    "includeSymbolsDescription": "p.ej. !@#$%...",
+    "includeNumbers": "Incluir números",
+    "includeNumbersDescription": "p.ej. 123456",
+    "includeLowercase": "Incluir minúsculas",
+    "includeLowercaseDescription": "p.ej. abcdefgh",
+    "includeUppercase": "Incluir mayúsculas",
+    "includeUppercaseDescription": "p.ej. ABCDEFGH",
+    "excludeSimilar": "Excluir caracteres similares",
+    "excludeSimilarDescription": "p.ej. i, l, 1, L, o, 0, O",
+    "generateButton": "Generar"
+  },
+  "PasswordInput": {
+    "clickToCopy": "Haga clic para copiar",
+    "copied": "¡Copiado!"
+  },
+  "ThemeToggle": {
+    "dark": "Oscuro",
+    "light": "Claro",
+    "system": "Sistema",
+    "toggleTheme": "Cambiar tema"
+  },
+  "LanguageToggle": {
+    "en": "Inglés",
+    "uk": "Ucraniano",
+    "es": "Español",
+    "toggleLanguage": "Cambiar idioma"
+  }
+}

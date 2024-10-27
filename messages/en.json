@@ -1,0 +1,36 @@
+{
+  "Header": {
+    "title": "RandPass",
+    "description": "Secure password generator"
+  },
+  "InputForm": {
+    "passwordLength": "Password length",
+    "includeSymbols": "Include symbols",
+    "includeSymbolsDescription": "e.g. !@#$%...",
+    "includeNumbers": "Include numbers",
+    "includeNumbersDescription": "e.g. 123456",
+    "includeLowercase": "Include lowercase",
+    "includeLowercaseDescription": "e.g. abcdefgh",
+    "includeUppercase": "Include uppercase",
+    "includeUppercaseDescription": "e.g. ABCDEFGH",
+    "excludeSimilar": "Exclude similar characters",
+    "excludeSimilarDescription": "e.g. i, l, 1, L, o, 0, O",
+    "generateButton": "Generate"
+  },
+  "PasswordInput": {
+    "clickToCopy": "Click to copy",
+    "copied": "Copied!"
+  },
+  "ThemeToggle": {
+    "dark": "Dark",
+    "light": "Light",
+    "system": "System",
+    "toggleTheme": "Toggle theme"
+  },
+  "LanguageToggle": {
+    "en": "English",
+    "uk": "Ukrainian",
+    "es": "Spanish",
+    "toggleLanguage": "Toggle language"
+  }
+}
