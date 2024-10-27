@@ -11,11 +11,10 @@ import {Form, FormControl, FormField, FormItem} from "@/components/ui/form";
 import CardWithSlider from "@/components/cardWithSwitcher";
 import {zodResolver} from "@hookform/resolvers/zod";
 import PasswordInput from "@/components/passwordInput";
-import {useEffect} from "react";
-import {Toaster} from "@/components/ui/sonner"
+import {useEffect, useState} from "react";
 import Header from "@/components/header";
 import {Button} from "@/components/ui/button";
-import {UpdateIcon} from "@radix-ui/react-icons";
+import {RefreshCcw} from "lucide-react"
 
 const formSchema = z.object({
   generatedPassword: z.string().optional(),
@@ -40,6 +39,13 @@ function InputForm() {
       isIncludeSymbols: false,
     },
   });
+
+  const [isSpinning, setIsSpinning] = useState(false);
+
+  function handleClick() {
+    setIsSpinning(true);
+    setTimeout(() => setIsSpinning(false), 1000); // Stop spinning after 1 second
+  }
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     try {
@@ -214,12 +220,12 @@ function InputForm() {
           <Button
             form="passwordForm"
             disabled={checkSubmitDisable()}
-            className={`w-full mx-8 ${checkSubmitDisable() ? 'disabled:cursor-not-allowed' : ''}`}
+            className={`button w-full h-12 mx-8 ${checkSubmitDisable() ? 'disabled:cursor-not-allowed' : ''}`}
+            onClick={handleClick}
           >
-            <UpdateIcon className="mr-2"/> Generate
+            <RefreshCcw size="16" className={`mr-2 ${isSpinning ? 'spin' : ''}`}/> Generate
           </Button>
         </div>
-        <Toaster/>
       </div>
     </div>
   );
