@@ -41,10 +41,10 @@ function PasswordInput({value}: any) {
               tabIndex={0}
               role="button" // Indicate that the Card behaves like a button
               aria-label={t('clickToCopy')} // Provide a descriptive label
-              className={`cursor-pointer w-full relative group`}
+              className={`cursor-pointer w-full relative group border-dashed border-2`}
             >
               <div
-                className="flex items-center space-x-1 absolute top-2 right-2 text-green-500 text-xs transition-opacity duration-300 ease-out"
+                className="flex items-center space-x-1 absolute top-2 right-2 text-green-500 font-mono text-xs transition-opacity duration-300 ease-out"
                 style={{opacity: isCopied ? 1 : 0}}
               >
                 <span>{t('copied')}</span>

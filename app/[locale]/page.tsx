@@ -16,6 +16,7 @@ import Header from "@/components/header";
 import {Button} from "@/components/ui/button";
 import {RefreshCcw} from "lucide-react"
 import {useTranslations} from 'next-intl';
+import PasswordHistory from "@/components/PasswordHistory";
 
 const formSchema = z.object({
   generatedPassword: z.string().optional(),
@@ -42,25 +43,26 @@ function InputForm() {
   });
 
   const [isSpinning, setIsSpinning] = useState(false);
+  const [passwordHistory, setPasswordHistory] = useState<any[]>([]);
 
   function handleClick() {
     setIsSpinning(true);
-    setTimeout(() => setIsSpinning(false), 1000); // Stop spinning after 1 second
+    setTimeout(() => setIsSpinning(false), 1000);
   }
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      form.setValue(
-        "generatedPassword",
-        generatePassword({
-          length: values.passwordLength,
-          numbers: values.isIncludeNumbers,
-          lowercase: values.isIncludeLowercase,
-          uppercase: values.isIncludeUppercase,
-          excludeSimilarCharacters: values.excludeSimilar,
-          symbols: values.isIncludeSymbols,
-        })
-      );
+      const newPassword = generatePassword({
+        length: values.passwordLength,
+        numbers: values.isIncludeNumbers,
+        lowercase: values.isIncludeLowercase,
+        uppercase: values.isIncludeUppercase,
+        excludeSimilarCharacters: values.excludeSimilar,
+        symbols: values.isIncludeSymbols,
+      });
+      form.setValue("generatedPassword", newPassword);
+      const generateDate = new Date();
+      setPasswordHistory((prevHistory) => [{generateDate, password: newPassword}, ...prevHistory]);
     } catch (error: any) {
       console.error(error.message);
     }
@@ -229,6 +231,7 @@ function InputForm() {
             <RefreshCcw size="16" className={`mr-2 ${isSpinning ? 'spin' : ''}`}/> {t('generateButton')}
           </Button>
         </div>
+        <PasswordHistory data={passwordHistory}/>
       </div>
     </div>
   );

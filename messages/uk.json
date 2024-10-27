@@ -27,10 +27,14 @@
     "system": "Системна",
     "toggleTheme": "Змінити тему"
   },
-    "LanguageToggle": {
+  "LanguageToggle": {
     "en": "Англійська",
     "uk": "Українська",
     "es": "Іспанська",
     "toggleLanguage": "Змінити мову"
+  },
+  "PasswordHistory": {
+    "title": "Password history",
+    "copied": "Скопійовано!"
   }
 }

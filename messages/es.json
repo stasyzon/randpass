@@ -32,5 +32,9 @@
     "uk": "Ucraniano",
     "es": "Español",
     "toggleLanguage": "Cambiar idioma"
+  },
+  "PasswordHistory": {
+    "title": "Password history",
+    "copied": "¡Copiado!"
   }
 }
