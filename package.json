@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev --turbo",
     "build": "next build",
+    "build:docker": "docker build -t randpass .",
     "start": "next start",
     "lint": "next lint"
   },
