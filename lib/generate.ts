@@ -3,7 +3,7 @@ const RANDOM_BATCH_SIZE = 256;
 let randomIndex: number | undefined;
 let randomBytes = new Uint8Array(RANDOM_BATCH_SIZE);
 
-function getRandomBytes(size: number): Uint8Array {
+function getRandomBytes(size: number) {
   const array = new Uint8Array(size);
   window.crypto.getRandomValues(array);
   return array;
