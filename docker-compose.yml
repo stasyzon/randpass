@@ -1,0 +1,5 @@
+services:
+  randpass:
+    image: docker.io/library/randpass
+    ports:
+      - "3000:3000"
