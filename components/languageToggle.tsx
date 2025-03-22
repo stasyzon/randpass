@@ -29,7 +29,7 @@ function LanguageToggle() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon" className="min-w-10">
+        <Button variant="outline" size="icon" className="min-w-10 cursor-pointer">
           <Languages className="h-[1.2rem] w-[1.2rem]"/>
           <span className="sr-only">{t('toggleLanguage')}</span>
         </Button>

@@ -32,7 +32,7 @@ function PasswordButton({passwordData}: { passwordData: PasswordEntry }) {
     <Button
       variant="ghost"
       onClick={handleCopy}
-      className="flex justify-start items-center w-full group relative"
+      className="flex justify-start items-center w-full group relative cursor-pointer"
     >
     <span className="text-xs sm:text-sm text-gray-500 mr-2 sm:mr-6">
       {passwordData.generateDate.toLocaleString()}
