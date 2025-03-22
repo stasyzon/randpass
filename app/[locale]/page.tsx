@@ -85,7 +85,7 @@ function InputForm() {
 
   return (
     <div>
-      <div className="flex flex-col items-center container max-w-screen-md mx-auto py-8">
+      <div className="flex flex-col items-center container max-w-(--breakpoint-md) mx-auto py-8">
         <Header/>
         <Form {...form}>
           <form
@@ -221,7 +221,7 @@ function InputForm() {
             </div>
           </form>
         </Form>
-        <div className="sticky bottom-0 w-screen bg-background py-8 flex items-center justify-center max-w-screen-md">
+        <div className="sticky bottom-0 w-screen bg-background py-8 flex items-center justify-center max-w-(--breakpoint-md)">
           <Button
             form="passwordForm"
             disabled={checkSubmitDisable()}
