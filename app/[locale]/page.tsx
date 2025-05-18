@@ -225,7 +225,7 @@ function InputForm() {
           <Button
             form="passwordForm"
             disabled={checkSubmitDisable()}
-            className={`button w-full h-12 mx-8 ${checkSubmitDisable() ? 'disabled:cursor-not-allowed' : ''}`}
+            className={`button w-full h-12 mx-8 disabled:cursor-not-allowed cursor-pointer`}
             onClick={handleClick}
           >
             <RefreshCcw size="16" className={`mr-2 ${isSpinning ? 'spin' : ''}`}/> {t('generateButton')}

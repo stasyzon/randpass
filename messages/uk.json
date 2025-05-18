@@ -28,9 +28,9 @@
     "toggleTheme": "Змінити тему"
   },
   "LanguageToggle": {
-    "en": "Англійська",
+    "en": "English",
     "uk": "Українська",
-    "es": "Іспанська",
+    "es": "Español",
     "toggleLanguage": "Змінити мову"
   },
   "PasswordHistory": {

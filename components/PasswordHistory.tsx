@@ -1,8 +1,8 @@
 import {useState, FC} from 'react';
 import {Card} from "@/components/ui/card";
-import {useTranslations} from 'next-intl';
+import {useTranslations, useLocale} from 'next-intl';
 import {useCopyToClipboard} from '@/hooks/useCopyToClipboard';
-import {Check, Copy} from "lucide-react";
+import { Copy} from "lucide-react";
 import {Button} from '@/components/ui/button';
 import {Skeleton} from "@/components/ui/skeleton"
 
@@ -16,6 +16,7 @@ interface PasswordHistoryProps {
 }
 
 function PasswordButton({passwordData}: { passwordData: PasswordEntry }) {
+  const locale = useLocale();
   const [isCopied, setIsCopied] = useState(false);
   const [, copy] = useCopyToClipboard();
 
@@ -35,7 +36,7 @@ function PasswordButton({passwordData}: { passwordData: PasswordEntry }) {
       className="flex justify-start items-center w-full group relative cursor-pointer"
     >
     <span className="text-xs sm:text-sm text-gray-500 mr-2 sm:mr-6">
-      {passwordData.generateDate.toLocaleString()}
+      {passwordData.generateDate.toLocaleString(locale)}
     </span>
       <span className="text-xs sm:text-base">{passwordData.password}</span>
 
@@ -44,7 +45,6 @@ function PasswordButton({passwordData}: { passwordData: PasswordEntry }) {
         style={{opacity: isCopied ? 1 : 0}}
       >
         <span>{t('copied')}</span>
-        <Check size="16"/>
       </div>
       <Copy
         size="16"

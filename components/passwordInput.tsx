@@ -55,7 +55,27 @@ function PasswordInput({value}: any) {
                 className={`text-neutral-500 absolute top-2 right-2 group-hover:animate-pulse ${isCopied ? 'hidden' : 'block'}`}
               />
               <div className="w-full overflow-x-auto text-center p-6">
-                <span className="text-4xl font-mono break-all">{value || 'Loading...'}</span>
+              <span className="text-4xl font-mono break-all">
+                {(value || 'Loading...').split('').map((char: string, idx: number) => {
+                  let className = "";
+                  if (/[0-9]/.test(char)) {
+                    className = "text-yellow-600/70";      // Numbers: soft yellow
+                  } else if (/[A-Z]/.test(char)) {
+                    className = "text-red-600/70";         // Uppercase: soft red
+                  } else if (/[a-z]/.test(char)) {
+                    className = "text-blue-600/60";        // Lowercase: muted blue
+                  } else if (/\s/.test(char)) {
+                    className = "text-muted-foreground";   // Whitespace or muted
+                  } else {
+                    className = "text-green-600/70";       // Special symbols: soft green
+                  }
+                  return (
+                      <span key={idx} className={className}>
+                      {char}
+                    </span>
+                  );
+                })}
+              </span>
               </div>
             </Card>
           </TooltipTrigger>
