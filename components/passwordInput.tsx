@@ -9,6 +9,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import {useTranslations} from "next-intl";
+import { Skeleton } from "@/components/ui/skeleton"
 
 function PasswordInput({value}: any) {
   const [isCopied, setIsCopied] = useState(false);
@@ -55,8 +56,9 @@ function PasswordInput({value}: any) {
                 className={`text-neutral-500 absolute top-2 right-2 group-hover:animate-pulse ${isCopied ? 'hidden' : 'block'}`}
               />
               <div className="w-full overflow-x-auto text-center p-6">
-              <span className="text-4xl font-mono break-all">
-                {(value || 'Loading...').split('').map((char: string, idx: number) => {
+                  {!value && <Skeleton className="w-50 h-10 mx-auto"/>}
+                {value && <span className="text-4xl font-mono break-all">
+                {value.split('').map((char: string, idx: number) => {
                   let className = "";
                   if (/[0-9]/.test(char)) {
                     className = "text-yellow-600/70";      // Numbers: soft yellow
@@ -75,7 +77,7 @@ function PasswordInput({value}: any) {
                     </span>
                   );
                 })}
-              </span>
+              </span>}
               </div>
             </Card>
           </TooltipTrigger>
