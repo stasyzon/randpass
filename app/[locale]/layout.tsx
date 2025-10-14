@@ -7,6 +7,7 @@ import {getMessages} from 'next-intl/server';
 import {ReactNode} from "react";
 import {notFound} from 'next/navigation';
 import {routing} from '@/i18n/routing';
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 export const viewport = {
   themeColor: '#171717',
@@ -65,6 +66,7 @@ export default async function RootLayout({
   return (
     <html lang={locale} suppressHydrationWarning>
     <Analytics/>
+    <SpeedInsights/>
 
     <body>
     <NextIntlClientProvider messages={messages}>
