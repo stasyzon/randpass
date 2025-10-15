@@ -24,6 +24,7 @@ import {Button} from "@/components/ui/button";
 import {RefreshCcw} from "lucide-react"
 import {useTranslations} from 'next-intl';
 import PasswordHistory from "@/components/PasswordHistory";
+import PasswordStrengthIndicator from "@/components/PasswordStrengthIndicator";
 import type { PasswordEntry, PasswordFormValues } from "@/types/password";
 
 const formSchema = z.object({
@@ -102,7 +103,7 @@ function InputForm() {
             onSubmit={form.handleSubmit(onSubmit)}
             className="w-full mt-8"
           >
-            <div className="mb-8">
+            <div className="mb-8 space-y-3">
               <FormField
                 control={form.control}
                 name="generatedPassword"
@@ -118,6 +119,7 @@ function InputForm() {
                   </FormItem>
                 )}
               />
+              <PasswordStrengthIndicator password={form.watch("generatedPassword") || ""} />
             </div>
             <div>
               <div className="grid sm:grid-cols-2 gap-4">

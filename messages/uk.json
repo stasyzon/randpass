@@ -36,5 +36,13 @@
   "PasswordHistory": {
     "title": "Password history",
     "copied": "Скопійовано!"
+  },
+  "PasswordStrength": {
+    "title": "Надійність",
+    "veryWeak": "Дуже слабкий",
+    "weak": "Слабкий",
+    "fair": "Середній",
+    "strong": "Надійний",
+    "veryStrong": "Дуже надійний"
   }
 }

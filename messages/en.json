@@ -36,5 +36,13 @@
   "PasswordHistory": {
     "title": "History",
     "copied": "Copied!"
+  },
+  "PasswordStrength": {
+    "title": "Strength",
+    "veryWeak": "Very weak",
+    "weak": "Weak",
+    "fair": "Fair",
+    "strong": "Strong",
+    "veryStrong": "Very strong"
   }
 }
