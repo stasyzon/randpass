@@ -10,16 +10,18 @@ import {
 } from "@/components/ui/tooltip";
 import {useTranslations} from "next-intl";
 import { Skeleton } from "@/components/ui/skeleton"
+import { COPY_FEEDBACK_DURATION } from "@/lib/constants";
+import type { PasswordInputProps } from "@/types/password";
 
-function PasswordInput({value}: any) {
-  const [isCopied, setIsCopied] = useState(false);
+function PasswordInput({value}: PasswordInputProps) {
+  const [isCopied, setIsCopied] = useState<boolean>(false);
   const [, copy] = useCopyToClipboard();
 
   function onCopyClick() {
     const valueToCopy = value || '';
     copy(valueToCopy).then(() => {
       setIsCopied(true);
-      setTimeout(() => setIsCopied(false), 2000);
+      setTimeout(() => setIsCopied(false), COPY_FEEDBACK_DURATION);
     });
   }
 

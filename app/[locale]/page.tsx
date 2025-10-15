@@ -6,9 +6,16 @@ import {Label} from "@/components/ui/label";
 import {Slider} from "@/components/ui/slider";
 import * as z from "zod";
 import {generatePassword} from "@/lib/generate";
+import {
+  DEFAULT_PASSWORD_LENGTH,
+  MIN_PASSWORD_LENGTH,
+  MAX_PASSWORD_LENGTH,
+  COPY_FEEDBACK_DURATION,
+  SPIN_ANIMATION_DURATION
+} from "@/lib/constants";
 
 import {Form, FormControl, FormField, FormItem} from "@/components/ui/form";
-import CardWithSlider from "@/components/cardWithSwitcher";
+import CardWithSwitcher from "@/components/cardWithSwitcher";
 import {zodResolver} from "@hookform/resolvers/zod";
 import PasswordInput from "@/components/passwordInput";
 import {useEffect, useState} from "react";
@@ -17,6 +24,7 @@ import {Button} from "@/components/ui/button";
 import {RefreshCcw} from "lucide-react"
 import {useTranslations} from 'next-intl';
 import PasswordHistory from "@/components/PasswordHistory";
+import type { PasswordEntry, PasswordFormValues } from "@/types/password";
 
 const formSchema = z.object({
   generatedPassword: z.string().optional(),
@@ -29,11 +37,11 @@ const formSchema = z.object({
 });
 
 function InputForm() {
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<PasswordFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       generatedPassword: "",
-      passwordLength: 8,
+      passwordLength: DEFAULT_PASSWORD_LENGTH,
       isIncludeNumbers: true,
       isIncludeLowercase: true,
       isIncludeUppercase: true,
@@ -42,15 +50,15 @@ function InputForm() {
     },
   });
 
-  const [isSpinning, setIsSpinning] = useState(false);
-  const [passwordHistory, setPasswordHistory] = useState<any[]>([]);
+  const [isSpinning, setIsSpinning] = useState<boolean>(false);
+  const [passwordHistory, setPasswordHistory] = useState<PasswordEntry[]>([]);
 
   function handleClick() {
     setIsSpinning(true);
-    setTimeout(() => setIsSpinning(false), 1000);
+    setTimeout(() => setIsSpinning(false), SPIN_ANIMATION_DURATION);
   }
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: PasswordFormValues) {
     try {
       const newPassword = generatePassword({
         length: values.passwordLength,
@@ -63,8 +71,9 @@ function InputForm() {
       form.setValue("generatedPassword", newPassword);
       const generateDate = new Date();
       setPasswordHistory((prevHistory) => [{generateDate, password: newPassword}, ...prevHistory]);
-    } catch (error: any) {
-      console.error(error.message);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+      console.error('Password generation error:', errorMessage);
     }
   }
 
@@ -127,8 +136,8 @@ function InputForm() {
                           </div>
                           <Slider
                             defaultValue={[field.value]}
-                            max={24}
-                            min={4}
+                            max={MAX_PASSWORD_LENGTH}
+                            min={MIN_PASSWORD_LENGTH}
                             step={1}
                             onValueChange={setPasswordLength}
                           />
@@ -143,7 +152,7 @@ function InputForm() {
                   render={({field}) => (
                     <FormItem className="w-full">
                       <FormControl>
-                        <CardWithSlider
+                        <CardWithSwitcher
                           onCheckedChange={field.onChange}
                           checked={field.value}
                           label={t('includeSymbols')}
@@ -159,7 +168,7 @@ function InputForm() {
                   render={({field}) => (
                     <FormItem className="w-full">
                       <FormControl>
-                        <CardWithSlider
+                        <CardWithSwitcher
                           onCheckedChange={field.onChange}
                           checked={field.value}
                           label={t('includeNumbers')}
@@ -175,7 +184,7 @@ function InputForm() {
                   render={({field}) => (
                     <FormItem className="w-full">
                       <FormControl>
-                        <CardWithSlider
+                        <CardWithSwitcher
                           onCheckedChange={field.onChange}
                           checked={field.value}
                           label={t('includeLowercase')}
@@ -191,7 +200,7 @@ function InputForm() {
                   render={({field}) => (
                     <FormItem className="w-full">
                       <FormControl>
-                        <CardWithSlider
+                        <CardWithSwitcher
                           onCheckedChange={field.onChange}
                           checked={field.value}
                           label={t('includeUppercase')}
@@ -207,7 +216,7 @@ function InputForm() {
                   render={({field}) => (
                     <FormItem className="w-full">
                       <FormControl>
-                        <CardWithSlider
+                        <CardWithSwitcher
                           onCheckedChange={field.onChange}
                           checked={field.value}
                           label={t('excludeSimilar')}

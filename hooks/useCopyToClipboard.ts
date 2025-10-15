@@ -1,10 +1,23 @@
 import {useCallback, useState} from 'react'
 
 type CopiedValue = string | null
-
 type CopyFn = (text: string) => Promise<boolean>
+type UseCopyToClipboardReturn = [CopiedValue, CopyFn]
 
-export function useCopyToClipboard(): [CopiedValue, CopyFn] {
+/**
+ * Custom hook for copying text to clipboard
+ * @returns A tuple containing the copied text and a copy function
+ * @example
+ * ```tsx
+ * const [copiedText, copy] = useCopyToClipboard();
+ * 
+ * const handleCopy = async () => {
+ *   const success = await copy('Text to copy');
+ *   if (success) console.log('Copied!');
+ * };
+ * ```
+ */
+export function useCopyToClipboard(): UseCopyToClipboardReturn {
   const [copiedText, setCopiedText] = useState<CopiedValue>(null)
 
   const copy: CopyFn = useCallback(async text => {

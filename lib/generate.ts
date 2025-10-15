@@ -1,4 +1,11 @@
-const RANDOM_BATCH_SIZE = 256;
+import {
+  RANDOM_BATCH_SIZE,
+  LOWERCASE_CHARS,
+  UPPERCASE_CHARS,
+  NUMBER_CHARS,
+  SYMBOL_CHARS,
+  SIMILAR_CHARS_PATTERN,
+} from './constants';
 
 let randomIndex: number | undefined;
 let randomBytes = new Uint8Array(RANDOM_BATCH_SIZE);
@@ -29,11 +36,6 @@ const randomNumber = (max: number): number => {
   return rand % max;
 };
 
-const lowercase = 'abcdefghijklmnopqrstuvwxyz';
-const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-const numbers = '0123456789';
-const symbols = '!@#$%^&*()+_-=}{[]|:;"/?.><,`~';
-const similarCharacters = /[ilLI|`oO0]/g;
 const strictRules = [
   { name: 'lowercase', rule: /[a-z]/ },
   { name: 'uppercase', rule: /[A-Z]/ },
@@ -41,19 +43,29 @@ const strictRules = [
   { name: 'symbols', rule: /[!@#$%^&*()+_\-=}{[\]|:;"/?.><,`~]/ }
 ];
 
-interface Options {
+/**
+ * Password generation configuration options
+ */
+export interface PasswordOptions {
+  /** Length of the password to generate */
   length?: number;
+  /** Include numeric characters (0-9) */
   numbers?: boolean;
+  /** Include special symbol characters or custom symbols */
   symbols?: boolean | string;
+  /** Characters to exclude from generation */
   exclude?: string;
+  /** Include uppercase letters (A-Z) */
   uppercase?: boolean;
+  /** Include lowercase letters (a-z) */
   lowercase?: boolean;
+  /** Exclude visually similar characters (i, l, 1, L, o, 0, O) */
   excludeSimilarCharacters?: boolean;
+  /** Enforce strict mode - ensure at least one character from each enabled category */
   strict?: boolean;
-  [index: string]: any;
 }
 
-const generate = (options: Options, pool: string): string => {
+const generate = (options: PasswordOptions, pool: string): string => {
   let password = '';
   const optionsLength = options.length || 0;
   const poolLength = pool.length;
@@ -64,10 +76,11 @@ const generate = (options: Options, pool: string): string => {
 
   if (options.strict) {
     const fitsRules = strictRules.every((rule) => {
-      if (!options[rule.name]) return true;
+      const optionValue = options[rule.name as keyof PasswordOptions];
+      if (!optionValue) return true;
 
-      if (rule.name === 'symbols' && typeof options[rule.name] === 'string') {
-        const re = new RegExp('[' + options[rule.name] + ']');
+      if (rule.name === 'symbols' && typeof optionValue === 'string') {
+        const re = new RegExp('[' + optionValue + ']');
         return re.test(password);
       }
 
@@ -80,7 +93,14 @@ const generate = (options: Options, pool: string): string => {
   return password;
 };
 
-export const generatePassword = (options?: Options): string => {
+/**
+ * Generates a cryptographically secure random password
+ * @param options - Configuration options for password generation
+ * @returns Generated password string
+ * @throws {TypeError} If strict mode requirements cannot be met with given length
+ * @throws {TypeError} If no character pools are enabled
+ */
+export const generatePassword = (options?: PasswordOptions): string => {
   options = options || {};
   if (!Object.prototype.hasOwnProperty.call(options, 'length')) options.length = 10;
   if (!Object.prototype.hasOwnProperty.call(options, 'numbers')) options.numbers = false;
@@ -101,22 +121,22 @@ export const generatePassword = (options?: Options): string => {
   let pool = '';
 
   if (options.lowercase) {
-    pool += lowercase;
+    pool += LOWERCASE_CHARS;
   }
 
   if (options.uppercase) {
-    pool += uppercase;
+    pool += UPPERCASE_CHARS;
   }
 
   if (options.numbers) {
-    pool += numbers;
+    pool += NUMBER_CHARS;
   }
 
   if (options.symbols) {
     if (typeof options.symbols === 'string') {
       pool += options.symbols;
     } else {
-      pool += symbols;
+      pool += SYMBOL_CHARS;
     }
   }
 
@@ -125,7 +145,7 @@ export const generatePassword = (options?: Options): string => {
   }
 
   if (options.excludeSimilarCharacters) {
-    pool = pool.replace(similarCharacters, '');
+    pool = pool.replace(SIMILAR_CHARS_PATTERN, '');
   }
 
   let i = options.exclude?.length || 0;

@@ -2,15 +2,9 @@ import { Card } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { MouseEvent } from "react";
+import type { CardWithSwitcherProps } from "@/types/password";
 
-interface Props {
-  label: string;
-  checked: boolean;
-  description: string;
-  onCheckedChange: (checked: boolean) => void;
-}
-
-function cardWithSwitcher({ label, checked, onCheckedChange, description }: Props) {
+function CardWithSwitcher({ label, checked, onCheckedChange, description }: CardWithSwitcherProps) {
   const handleClick = (event: MouseEvent) => {
     // Prevent the Switch's onClick from being triggered
     if ((event.target as HTMLElement).tagName !== 'INPUT') {
@@ -32,4 +26,4 @@ function cardWithSwitcher({ label, checked, onCheckedChange, description }: Prop
   );
 }
 
-export default cardWithSwitcher;
+export default CardWithSwitcher;

@@ -5,25 +5,18 @@ import {useCopyToClipboard} from '@/hooks/useCopyToClipboard';
 import { Copy} from "lucide-react";
 import {Button} from '@/components/ui/button';
 import {Skeleton} from "@/components/ui/skeleton"
+import { COPY_FEEDBACK_DURATION } from "@/lib/constants";
+import type { PasswordEntry, PasswordHistoryProps, PasswordButtonProps } from "@/types/password";
 
-type PasswordEntry = {
-  generateDate: Date;
-  password: string;
-};
-
-interface PasswordHistoryProps {
-  data: PasswordEntry[];
-}
-
-function PasswordButton({passwordData}: { passwordData: PasswordEntry }) {
+function PasswordButton({passwordData}: PasswordButtonProps) {
   const locale = useLocale();
-  const [isCopied, setIsCopied] = useState(false);
+  const [isCopied, setIsCopied] = useState<boolean>(false);
   const [, copy] = useCopyToClipboard();
 
   const handleCopy = () => {
     copy(passwordData.password).then(() => {
       setIsCopied(true);
-      setTimeout(() => setIsCopied(false), 1000);
+      setTimeout(() => setIsCopied(false), COPY_FEEDBACK_DURATION);
     });
   };
 

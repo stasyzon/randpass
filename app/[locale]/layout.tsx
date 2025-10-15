@@ -4,10 +4,10 @@ import {Analytics} from '@vercel/analytics/react';
 import {ThemeProvider} from "@/components/theme-provider"
 import {NextIntlClientProvider} from 'next-intl';
 import {getMessages} from 'next-intl/server';
-import {ReactNode} from "react";
 import {notFound} from 'next/navigation';
 import {routing} from '@/i18n/routing';
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import type { LayoutProps, Locale } from "@/types/common";
 
 export const viewport = {
   themeColor: '#171717',
@@ -48,16 +48,12 @@ export const metadata: Metadata = {
 }
 
 export default async function RootLayout({
-                                           children,
-                                           params
-                                         }: {
-  children: ReactNode,
-  params: any
-}) {
-
+  children,
+  params
+}: LayoutProps) {
   const {locale} = await params;
 
-  if (!routing.locales.includes(locale as any)) {
+  if (!routing.locales.includes(locale as Locale)) {
     notFound();
   }
 
